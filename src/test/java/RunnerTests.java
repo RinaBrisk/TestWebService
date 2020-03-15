@@ -4,13 +4,14 @@ import org.glassfish.jersey.client.ClientResponse;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.Before;
 import org.junit.Test;
-import web.data.Person;
+import web.webapp.model.Project;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 public class RunnerTests {
 
@@ -29,26 +30,47 @@ public class RunnerTests {
     @Test
     public void getProjectTest() {
 
-       // String result = (String) target.path(NAME).request(MediaType.APPLICATION_JSON).get(String.class);
+        Entity<Project> entity = Entity.json(new Project("myURL"));
 
-       // assertThat(result, is(equalTo(EXPECTED_JSON)));
+        Response response = target
+                .request(MediaType.APPLICATION_JSON)
+                .post(entity, Response.class);
 
-        Person person = new Person("Rina", "Bolotnikovskaya");
-
-
-        Entity<Person> entity = Entity.entity(person, MediaType.APPLICATION_JSON);
-
-        ClientResponse response = target
-                .request()
-                .post(entity, ClientResponse.class);
-
-        System.out.println("Form response " + response.getStatus());
+        System.out.println("Response code:  " + response.getStatus());
 
         if (response.getStatus() != 200) {
             throw new RuntimeException("Failed : HTTP error code : "
                     + response.getStatus());
         }
 
-        System.out.println("Server response .... \n");
     }
+
+    //Entity<String> entity = Entity.entity(
+    //  "{\"url\": \"Lili\"}", MediaType.APPLICATION_JSON);
+
+    //String str = "{\"url\": \"Lili\"}";
+
+    ///////////////
+
+    // Form input = new Form();
+    // input.param("url", "true");
+
+    // Response response = target.request().post(Entity.form(input));
+
+    ///////////////
+
+    // String result = (String) target.path(NAME).request(MediaType.APPLICATION_JSON).get(String.class);
+
+    // assertThat(result, is(equalTo(EXPECTED_JSON)));
+
+    //   Entity<Project> entity = Entity.entity(person, MediaType.APPLICATION_JSON);
+
+    // Entity<String> entity = Entity.entity(
+    //      "{\"name\": \"Lili\", \"address\": \"JavaInterviewPoint1212\"}",
+    //           MediaType.APPLICATION_JSON);
+
+//        ClientResponse response = target
+//                .request()
+//                .post(entity, ClientResponse.class);
+
 }

@@ -1,5 +1,6 @@
 package web.webapp;
-import web.data.Person;
+
+import web.webapp.model.Project;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -10,29 +11,27 @@ import javax.ws.rs.core.Response;
 public class RunTestsService {
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/url")
-    public Response getMessage(Person person) {
+    public Response getMessage(Project project) {
 
-        //Person person = new Person(url, "Nepal");
+        ResultResponse result = new ResultResponse(project.getUrl(), Response.Status.OK.toString());
 
         return Response
                 .status(Response.Status.OK)
-                .entity(person)
+                .entity(result)
                 .build();
     }
-
-
 //    @GET
 //    @Path("/{param}")
 //    public Response getMessage(@PathParam("param") String url) {
 //
-//        Person person = new Person(url, "Nepal");
+//        Project person = new Project(url, "Nepal");
 //
 //        return Response
 //                .status(Response.Status.OK)
 //                .entity(person)
 //                .build();
 //    }
-
 
 }
