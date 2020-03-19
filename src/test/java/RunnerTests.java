@@ -3,7 +3,7 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.Before;
 import org.junit.Test;
-import web.webapp.entity.Project;
+import web.webapp.model.Project;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -44,7 +44,7 @@ public class RunnerTests {
 
     }
 
-    //Entity<String> entity = Entity.entity(
+    //Entity<String> model = Entity.model(
     //  "{\"url\": \"Lili\"}", MediaType.APPLICATION_JSON);
 
     //String str = "{\"url\": \"Lili\"}";
@@ -62,14 +62,14 @@ public class RunnerTests {
 
     // assertThat(result, is(equalTo(EXPECTED_JSON)));
 
-    //   Entity<Project> entity = Entity.entity(person, MediaType.APPLICATION_JSON);
+    //   Entity<Project> model = Entity.model(person, MediaType.APPLICATION_JSON);
 
-    // Entity<String> entity = Entity.entity(
+    // Entity<String> model = Entity.model(
     //      "{\"name\": \"Lili\", \"address\": \"JavaInterviewPoint1212\"}",
     //           MediaType.APPLICATION_JSON);
 
 //        ClientResponse response = target
 //                .request()
-//                .post(entity, ClientResponse.class);
+//                .post(model, ClientResponse.class);
 
 }

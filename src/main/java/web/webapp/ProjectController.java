@@ -1,5 +1,5 @@
 package web.webapp;
-import web.webapp.entity.Project;
+import web.webapp.model.Project;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -9,11 +9,11 @@ import javax.ws.rs.core.Response;
 @Produces({MediaType.APPLICATION_JSON})
 public class ProjectController {
 
-    private final ProjectAdapter adapter;
+    ProjectAdapter adapter;
 
-    public ProjectController(ProjectAdapter adapter){
-        this.adapter = adapter;
-    }
+//    public ProjectController(ProjectAdapter adapter){
+//        this.adapter = adapter;
+//    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -61,7 +61,7 @@ public class ProjectController {
 //
 //        return Response
 //                .status(Response.Status.OK)
-//                .entity(person)
+//                .model(person)
 //                .build();
 //    }
 
