@@ -1,10 +1,9 @@
 
 import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.ClientResponse;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.Before;
 import org.junit.Test;
-import web.webapp.model.Project;
+import web.webapp.entity.Project;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
