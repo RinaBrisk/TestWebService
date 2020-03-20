@@ -9,11 +9,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class InMemotyProjectDB {
+public class InMemoryProjectDB {
 
     private List<Project> projectList;
 
-    public InMemotyProjectDB() {
+    public InMemoryProjectDB() {
         projectList = new ArrayList<>();
         addProject("https://github.com/edomingues/jersey.git", "Jersey", 2349);
         addProject("https://github.com/Jetty.git", "Jetty", 10393);

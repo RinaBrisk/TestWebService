@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ProjectDao implements Manipulate<Project> {
 
-    InMemotyProjectDB projectDB;
+    private InMemoryProjectDB projectDB;
 
     @Override
     public Project findByUrl(String url) {

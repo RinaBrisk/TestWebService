@@ -1,9 +1,12 @@
 package web.webapp;
+
 import web.webapp.model.Project;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 @Path("/project")
 @Produces({MediaType.APPLICATION_JSON})
@@ -15,54 +18,39 @@ public class ProjectController {
 //        this.adapter = adapter;
 //    }
 
-    @POST
+    @GET
+    @Path("/all")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/build")
-    public Response build(Project project) {
+    public Response projects() {
+        return adapter.getAll();
+    }
 
-        return Response
-                .status(Response.Status.OK)
-                .entity(adapter.buildProject(project.getUrl()))
-                .build();
+    @GET
+    @Path("/{url}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response project(@PathParam("url") String url) {
+        return adapter.getByUrl(url);
     }
 
     @POST
+    @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/runInnerTests")
-    public Response runInnerTests(Project project) {
-
-        ResultResponse result = new ResultResponse(project.getUrl(), Response.Status.OK.toString());
-
-        return Response
-                .status(Response.Status.OK)
-                .entity(result)
-                .build();
+    public Response create(Project project, @Context UriInfo uriInfo) {
+        return adapter.create(project, uriInfo);
     }
 
-    @POST
+    @DELETE
+    @Path("/delete/{url}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/runOtherTests")
-    public Response runOtherTests(Project project) {
-
-        ResultResponse result = new ResultResponse(project.getUrl(), Response.Status.OK.toString());
-
-        return Response
-                .status(Response.Status.OK)
-                .entity(result)
-                .build();
+    public Response delete(@PathParam("url") String url) {
+        return adapter.delete(url);
     }
 
-
-//    @GET
-//    @Path("/{param}")
-//    public Response getMessage(@PathParam("param") String url) {
-//
-//        Project person = new Project(url, "Nepal");
-//
-//        return Response
-//                .status(Response.Status.OK)
-//                .model(person)
-//                .build();
-//    }
+    @PUT
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response update(Project project, @Context UriInfo uriInfo) {
+        return adapter.update(project, uriInfo);
+    }
 
 }

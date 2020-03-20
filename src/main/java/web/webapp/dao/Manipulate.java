@@ -4,7 +4,7 @@ import web.webapp.model.Project;
 
 import java.util.List;
 
-public interface Manipulate<T extends Object> {
+public interface Manipulate<T> {
 
     T findByUrl(String url);
 
