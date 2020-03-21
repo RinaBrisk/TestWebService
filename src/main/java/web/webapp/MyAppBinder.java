@@ -1,9 +1,9 @@
 //package web.webapp;
 //
 //import org.glassfish.hk2.utilities.binding.AbstractBinder;
-//import web.webapp.dao.InMemoryProjectDB;
-//import web.webapp.dao.Manipulate;
-//import web.webapp.dao.ProjectDao;
+//import web.webapp.model.InMemoryProjectDB;
+//import web.webapp.model.Manipulate;
+//import web.webapp.model.ProjectDao;
 //
 //public class MyAppBinder extends AbstractBinder {
 //

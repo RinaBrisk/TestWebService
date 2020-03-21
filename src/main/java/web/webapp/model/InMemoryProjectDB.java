@@ -1,8 +1,7 @@
-package web.webapp.dao;
+package web.webapp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import web.webapp.model.Project;
 
 import java.util.ArrayList;
 import java.util.List;

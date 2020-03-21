@@ -1,6 +1,4 @@
-package web.webapp.dao;
-
-import web.webapp.model.Project;
+package web.webapp.model;
 
 import java.util.List;
 
@@ -8,7 +6,7 @@ public interface Manipulate<T> {
 
     T findByUrl(String url);
 
-    List<T> listAll();
+    List<T> getAll();
 
     Project add(Project project);
 

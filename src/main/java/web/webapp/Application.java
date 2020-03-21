@@ -6,8 +6,8 @@
 //import org.glassfish.hk2.api.ServiceLocator;
 //import org.glassfish.hk2.utilities.BuilderHelper;
 //import org.glassfish.jersey.server.ResourceConfig;
-//import web.webapp.dao.InMemoryProjectDB;
-//import web.webapp.dao.ProjectDao;
+//import web.webapp.model.InMemoryProjectDB;
+//import web.webapp.model.ProjectDao;
 //
 //import javax.inject.Inject;
 //

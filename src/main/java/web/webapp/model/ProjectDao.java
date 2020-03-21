@@ -1,9 +1,5 @@
-package web.webapp.dao;
+package web.webapp.model;
 
-import lombok.NoArgsConstructor;
-import web.webapp.model.Project;
-
-import javax.inject.Inject;
 import java.util.List;
 
 //@NoArgsConstructor
@@ -26,7 +22,7 @@ public class ProjectDao implements Manipulate<Project> {
     }
 
     @Override
-    public List<Project> listAll() {
+    public List<Project> getAll() {
         return projectDB.getProjectList();
     }
 

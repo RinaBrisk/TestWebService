@@ -1,13 +1,12 @@
 package web.webapp;
 
-import lombok.NoArgsConstructor;
-import web.webapp.dao.ProjectDao;
+import web.webapp.model.ProjectDao;
 import web.webapp.model.Project;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
+import java.util.List;
 
 //@NoArgsConstructor
 public class ProjectAdapter {
@@ -19,40 +18,40 @@ public class ProjectAdapter {
 //        this.projectDao = projectDao;
 //    }
 
-    public ProjectAdapter(){
+    public ProjectAdapter() {
         this.projectDao = new ProjectDao();
     }
 
-    Response getAll(){
-        return Response
-                .status(Response.Status.OK)
-                .entity(projectDao.listAll())
-                .build();
+    List<Project> getAll() {
+        return projectDao.getAll();
     }
 
-    Response getByUrl(String url){
-        return Response
-                .status(Response.Status.OK)
-                .entity(projectDao.findByUrl(url))
-                .build();
+    Object getByUrl(String url) {
+        if (url == null) return ErrorMsg.MISSING_FIELD_URL;
+        if (!url.contains("https://github.com")) return ErrorMsg.INCORRECT_FIELD_URL;
+        Project project = projectDao.findByUrl(url);
+        if (project == null)
+            return ErrorMsg.PROJECT_NOT_FOUND;
+        else
+            return project;
     }
 
-    Response create(Project project, UriInfo uriInfo){
+    Response create(Project project, UriInfo uriInfo) {
         Project createdProject = projectDao.add(project);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(createdProject.getUrl());
         return Response.created(builder.build()).build();
     }
 
-    Response delete(String url){
+    Response delete(String url) {
         Project project = projectDao.findByUrl(url);
-        if(project != null){
+        if (project != null) {
             projectDao.delete(project);
         }
         return Response.noContent().build();
     }
 
-    Response update(Project project, UriInfo uriInfo){
+    Response update(Project project, UriInfo uriInfo) {
         Boolean updateOk = projectDao.update(project);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(project.getUrl());
