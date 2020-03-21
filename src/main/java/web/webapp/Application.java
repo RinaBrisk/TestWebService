@@ -1,42 +1,32 @@
 //package web.webapp;
 //
-//import com.google.inject.*;
-//import com.google.inject.servlet.GuiceServletContextListener;
-//import com.google.inject.servlet.ServletModule;
-//import org.glassfish.jersey.client.ClientConfig;
-//import org.glassfish.jersey.jackson.JacksonFeature;
+//
+//import org.glassfish.hk2.api.DynamicConfiguration;
+//import org.glassfish.hk2.api.DynamicConfigurationService;
+//import org.glassfish.hk2.api.ServiceLocator;
+//import org.glassfish.hk2.utilities.BuilderHelper;
 //import org.glassfish.jersey.server.ResourceConfig;
-//import sun.security.pkcs11.Secmod;
+//import web.webapp.dao.InMemoryProjectDB;
+//import web.webapp.dao.ProjectDao;
 //
-//import javax.ws.rs.client.Client;
-//import javax.ws.rs.client.ClientBuilder;
+//import javax.inject.Inject;
 //
-//public class Application{
+//public class Application extends ResourceConfig {
 //
-//    public static void main(String[] args) {
-//        add(new AbstractModule() {
-//            @Override
-//            protected void configure() {
-//                // ...
-//            }
-//        });
+//    public Application() {
 //
-//        Injector injector = Guice.createInjector(modules);
-//        JerseyGuiceUtils.install(injector);
-//    }
+////        DynamicConfigurationService dcs = locator.getService(DynamicConfigurationService.class);
+////        DynamicConfiguration config = dcs.createDynamicConfiguration();
+////
+////        config.bind(BuilderHelper.link(ProjectController.class).to(ProjectController.class).build());
+////        config.bind(BuilderHelper.link(ProjectAdapter.class).to(ProjectController.class).build());
+////        config.bind(BuilderHelper.link(ProjectDao.class).to(ProjectAdapter.class).build());
+////        config.bind(BuilderHelper.link(InMemoryProjectDB.class).to(ProjectDao.class).build());
+////
+////        config.commit();
 //
-//}
-//
-//public class Application{
-//
-//    private static Client client;
-//    private static ProjectController projectController;
-//
-//    public static void main(String[] args){
-//        ClientConfig clientConfig = new ClientConfig();
-//        clientConfig.register(JacksonFeature.class);
-//        client = ClientBuilder.newClient(clientConfig);
-//        projectController = new ProjectController(new ProjectAdapter(client));
+//        register(new MyAppBinder());
+//        packages(true, "web.webapp");
 //    }
 //
 //}

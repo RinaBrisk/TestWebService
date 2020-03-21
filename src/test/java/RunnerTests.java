@@ -29,18 +29,18 @@ public class RunnerTests {
     @Test
     public void getProjectTest() {
 
-        Entity<Project> entity = Entity.json(new Project("myURL"));
+     //   Entity<Project> entity = Entity.json(new Project("myURL"));
 
-        Response response = target
-                .request(MediaType.APPLICATION_JSON)
-                .post(entity, Response.class);
-
-        System.out.println("Response code:  " + response.getStatus());
-
-        if (response.getStatus() != 200) {
-            throw new RuntimeException("Failed : HTTP error code : "
-                    + response.getStatus());
-        }
+      //  Response response = target
+//                .request(MediaType.APPLICATION_JSON)
+//                .post(entity, Response.class);
+//
+//        System.out.println("Response code:  " + response.getStatus());
+//
+//        if (response.getStatus() != 200) {
+//            throw new RuntimeException("Failed : HTTP error code : "
+//                    + response.getStatus());
+//        }
 
     }
 

@@ -1,18 +1,26 @@
 package web.webapp;
 
+import lombok.NoArgsConstructor;
 import web.webapp.dao.ProjectDao;
 import web.webapp.model.Project;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+//@NoArgsConstructor
 public class ProjectAdapter {
 
-    private final ProjectDao projectDao;
+    private ProjectDao projectDao;
 
-    public ProjectAdapter(ProjectDao projectDao){
-        this.projectDao = projectDao;
+//    @Inject
+//    public ProjectAdapter(ProjectDao projectDao){
+//        this.projectDao = projectDao;
+//    }
+
+    public ProjectAdapter(){
+        this.projectDao = new ProjectDao();
     }
 
     Response getAll(){

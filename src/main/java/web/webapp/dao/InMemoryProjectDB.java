@@ -7,8 +7,8 @@ import web.webapp.model.Project;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class InMemoryProjectDB {
 
     private List<Project> projectList;

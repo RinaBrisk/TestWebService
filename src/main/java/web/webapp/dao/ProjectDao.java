@@ -1,11 +1,24 @@
 package web.webapp.dao;
 
+import lombok.NoArgsConstructor;
 import web.webapp.model.Project;
+
+import javax.inject.Inject;
 import java.util.List;
 
+//@NoArgsConstructor
 public class ProjectDao implements Manipulate<Project> {
 
     private InMemoryProjectDB projectDB;
+
+    public ProjectDao(){
+        this.projectDB = new InMemoryProjectDB();
+    }
+
+    //@Inject
+    //private ProjectDao(InMemoryProjectDB projectDB){
+//        this.projectDB = projectDB;
+//    }
 
     @Override
     public Project findByUrl(String url) {

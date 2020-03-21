@@ -1,7 +1,10 @@
 package web.webapp;
 
+import lombok.NoArgsConstructor;
 import web.webapp.model.Project;
 
+import javax.inject.Inject;
+import javax.jws.Oneway;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -9,14 +12,20 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 @Path("/project")
+//@NoArgsConstructor
 @Produces({MediaType.APPLICATION_JSON})
 public class ProjectController {
 
-    ProjectAdapter adapter;
+    private ProjectAdapter adapter;
 
+   // @Inject
 //    public ProjectController(ProjectAdapter adapter){
 //        this.adapter = adapter;
 //    }
+
+    public ProjectController(){
+        this.adapter = new ProjectAdapter();
+    }
 
     @GET
     @Path("/all")
