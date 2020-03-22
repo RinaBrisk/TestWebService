@@ -2,11 +2,13 @@ package web.webapp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Component
 @AllArgsConstructor
 public class InMemoryProjectDB {
 

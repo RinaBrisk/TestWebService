@@ -10,7 +10,7 @@
 //    @Override
 //    protected void configure() {
 //        bind(ProjectController.class);
-//        bind(ProjectAdapter.class);
+//        bind(ProjectService.class);
 //        bind(ProjectDao.class);
 //        bind(InMemoryProjectDB.class);
 //    }

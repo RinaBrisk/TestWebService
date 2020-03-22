@@ -1,24 +1,20 @@
 package web.webapp.model;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-//@NoArgsConstructor
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
 public class ProjectDao implements Manipulate<Project> {
 
+    @Autowired
     private InMemoryProjectDB projectDB;
 
-    public ProjectDao(){
-        this.projectDB = new InMemoryProjectDB();
-    }
-
-    //@Inject
-    //private ProjectDao(InMemoryProjectDB projectDB){
-//        this.projectDB = projectDB;
-//    }
-
     @Override
-    public Project findByUrl(String url) {
-        return projectDB.getProjectList().stream().filter(project -> project.getUrl().equals(url)).findAny().get();
+    public List<Project> findByOwner(String owner) {
+        return projectDB.getProjectList().stream().filter(project -> project.getOwner().equals(owner)).collect(Collectors.toList());
     }
 
     @Override
@@ -27,28 +23,47 @@ public class ProjectDao implements Manipulate<Project> {
     }
 
     @Override
-    public Project add(Project project) {
-        return projectDB.addProject(project.getUrl(), project.getOwner(), project.getNumberOfStars());
+    public boolean add(Project project) {
+        boolean isOk = false;
+        if (findByUrl(project.getUrl()) != null) {
+            projectDB.addProject(project.getUrl(), project.getOwner(), project.getNumberOfStars());
+            isOk = true;
+        }
+        return isOk;
     }
 
     @Override
-    public void delete(Project project) {
-        projectDB.getProjectList().remove(project);
+    public boolean delete(String url) {
+        boolean isOk = false;
+        Project project = findByUrl(url);
+        if (project != null) {
+            projectDB.getProjectList().remove(project);
+            isOk = true;
+        }
+        return isOk;
     }
 
     @Override
     public boolean update(Project project) {
-        boolean ok = false;
-        Project existingProject = findByUrl(project.getUrl());
-        if (existingProject != null) {
+        boolean isOk = false;
+        if (findByUrl(project.getUrl()) != null) {
             projectDB.getProjectList().forEach(p -> {
-                if(p.getUrl().equals(project.getUrl())){
+                if (p.getUrl().equals(project.getUrl())) {
                     p.setOwner(project.getOwner());
                     p.setNumberOfStars(project.getNumberOfStars());
                 }
             });
-            ok = true;
+            isOk = true;
         }
-        return ok;
+        return isOk;
+    }
+
+    private Project findByUrl(String url) {
+        return projectExists(url) ?
+                projectDB.getProjectList().stream().filter(project -> project.getUrl().equals(url)).findAny().get() : null;
+    }
+
+    private boolean projectExists(String url) {
+        return projectDB.getProjectList().stream().anyMatch(project -> project.getUrl().equals(url));
     }
 }

@@ -1,72 +1,54 @@
 package web.webapp;
 
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import web.webapp.model.Project;
 import web.webapp.model.ProjectDao;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import java.net.URISyntaxException;
 import java.util.List;
 
-@Path("/project")
-//@NoArgsConstructor
-@Produces({MediaType.APPLICATION_JSON})
+@NoArgsConstructor
+@RestController
 public class ProjectController {
 
-    private ProjectAdapter adapter;
-    private ResultResponse response;
+    @Autowired
+    private ProjectDao projectDao;
 
-    // @Inject
-//    public ProjectController(ProjectAdapter adapter){
-//        this.adapter = adapter;
-//    }
 
-    public ProjectController() {
-        this.adapter = new ProjectAdapter();
-        this.response = new ResultResponse();
+    @GetMapping("projects/all")
+    public ResultResponse projects() throws URISyntaxException {
+        final List<Project> projects = projectDao.getAll();
+        return new ResultResponse(projects);
     }
 
-    @GET
-    @Path("/all")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response projects() {
-        List<Project> projects = adapter.getAll();
-        return response.getResult(TypeOfRequest.GET, projects);
+    @GetMapping("projects/{owner}")
+    public ResultResponse project(@PathVariable String owner) throws URISyntaxException{
+        final List<Project> projects = projectDao.findByOwner(owner);
+        return new ResultResponse(projects);
     }
 
-    @GET
-    @Path("/{url}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response project(@PathParam("url") String url) {
-        Object object = adapter.getByUrl(url);
-        if (object.getClass().equals(Project.class)) {
-            return response.getResult(TypeOfRequest.POST, object);
-        } else {
-            return response.getResult(object.toString());
-        }
+
+    @PostMapping("/create")
+    public ResultResponse create(@RequestBody Project project) throws URISyntaxException {
+        final boolean result = projectDao.add(project);
+        return new ResultResponse(result, TypeOfRequest.POST);
     }
 
-    @POST
-    @Path("/create")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(Project project, @Context UriInfo uriInfo) {
-        return adapter.create(project, uriInfo);
+
+    @DeleteMapping("/delete/{url}")
+    public ResultResponse delete(@PathParam("url") String url) throws URISyntaxException {
+        final boolean result = projectDao.delete(url);
+        return new ResultResponse(result, TypeOfRequest.DELETE);
     }
 
-    @DELETE
-    @Path("/delete/{url}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("url") String url) {
-        return adapter.delete(url);
-    }
 
-    @PUT
-    @Path("/update")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(Project project, @Context UriInfo uriInfo) {
-        return adapter.update(project, uriInfo);
+    @PutMapping("/update")
+    public ResultResponse update(Project project) throws URISyntaxException{
+        final boolean result = projectDao.update(project);
+        return new ResultResponse(result, TypeOfRequest.PUT);
     }
 
 }

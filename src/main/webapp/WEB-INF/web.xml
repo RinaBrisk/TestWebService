@@ -10,12 +10,6 @@
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>web.webapp</param-value>
-            <load-on-startup>1</load-on-startup>
-        </init-param>
-        <init-param>
-            <param-name>jersey.config.server.provider.classnames</param-name>
-            <param-value>web.webapp.MyAppBinder</param-value>
-            <load-on-startup>1</load-on-startup>
         </init-param>
         <init-param>
             <param-name>org.glassfish.jersey.api.json.POJOMappingFeature</param-name>

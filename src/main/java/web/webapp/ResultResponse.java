@@ -1,41 +1,60 @@
 package web.webapp;
 
-import lombok.NoArgsConstructor;
 import web.webapp.model.Project;
 
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@NoArgsConstructor
+
 public class ResultResponse {
-    private Object result;
-    private String code;
+    private List<Project> result;
+    private int code;
     private String message;
     private String state;
 
-    public Response getResult(TypeOfRequest request, Object result){
-        this.result = result;
-        if (TypeOfRequest.PUT.equals(request)) {
-            code = Response.status(201).toString();
-            state = Response.Status.ACCEPTED.toString();
-        } else {
-            code = Response.status(200).toString();
-            state = Response.Status.OK.toString();
-        }
-        return Response
-                .status(Response.Status.OK)
-                .entity(this)
-                .build();
+    ResultResponse() {
+        Response.Status status = Response.Status.OK;
+        code = status.getStatusCode();
+        state = status.getReasonPhrase();
     }
 
-    public Response getResult(String message){
-        code = Response.status(400).toString();
-        state = Response.Status.BAD_REQUEST.toString();
-        this.message = message;
-        return Response
-                .status(Response.Status.BAD_REQUEST)
-                .entity(this)
-                .build();
+
+    public ResultResponse(List<Project> result) {
+        this();
+        if (result != null && !result.isEmpty()) {
+            this.result = result;
+        } else {
+            setBadRequest();
+            message = "Проекты не найдены";
+        }
+    }
+
+    public ResultResponse(Boolean result, TypeOfRequest typeOfRequest) {
+        this();
+        switch (typeOfRequest) {
+            case POST:
+                if (result) {
+                    Response.Status status = Response.Status.ACCEPTED;
+                    code = status.getStatusCode();
+                    state = status.getReasonPhrase();
+                }else{
+                    setBadRequest();
+                    message = "Ошибка входных параметров";
+                }
+                break;
+            case PUT:
+            case DELETE:
+                if (!result) {
+                    setBadRequest();
+                    message = "Проект не найден";
+                }
+        }
+    }
+
+    private void setBadRequest(){
+        Response.Status status = Response.Status.BAD_REQUEST;
+        code = status.getStatusCode();
+        state = status.getReasonPhrase();
     }
 
 }

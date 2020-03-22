@@ -4,13 +4,13 @@ import java.util.List;
 
 public interface Manipulate<T> {
 
-    T findByUrl(String url);
+    List<T> findByOwner(String url);
 
     List<T> getAll();
 
-    Project add(Project project);
+    boolean add(Project project);
 
-    void delete(Project project);
+    boolean delete(String url);
 
     boolean update(Project project);
 }
