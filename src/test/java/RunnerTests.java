@@ -25,11 +25,11 @@ public class RunnerTests {
     @Test
     public void getProjectTest() {
 
-     //   Entity<Project> entity = Entity.json(new Project("myURL"));
+     //   Entity<Project> enums = Entity.json(new Project("myURL"));
 
       //  Response response = target
 //                .request(MediaType.APPLICATION_JSON)
-//                .post(entity, Response.class);
+//                .post(enums, Response.class);
 //
 //        System.out.println("Response code:  " + response.getStatus());
 //

@@ -1,11 +1,16 @@
 package web.webapp;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+import web.webapp.enums.ErrorMsg;
+import web.webapp.enums.TypeOfRequest;
 import web.webapp.model.Project;
 
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-
+@Data
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ResultResponse {
     private List<Project> result;
     private int code;
@@ -18,14 +23,11 @@ public class ResultResponse {
         state = status.getReasonPhrase();
     }
 
-
     public ResultResponse(List<Project> result) {
         this();
-        if (result != null && !result.isEmpty()) {
-            this.result = result;
-        } else {
-            setBadRequest();
-            message = "Проекты не найдены";
+        this.result = result;
+        if (result == null || result.isEmpty()) {
+            message = ErrorMsg.PROJECTS_NOT_FOUND.getText();
         }
     }
 
@@ -34,24 +36,34 @@ public class ResultResponse {
         switch (typeOfRequest) {
             case POST:
                 if (result) {
-                    Response.Status status = Response.Status.ACCEPTED;
+                    Response.Status status = Response.Status.CREATED;
                     code = status.getStatusCode();
                     state = status.getReasonPhrase();
-                }else{
+                } else {
                     setBadRequest();
-                    message = "Ошибка входных параметров";
+                    message = ErrorMsg.ERROR_IN_INPUT_PARAMS.getText();
                 }
                 break;
             case PUT:
-            case DELETE:
                 if (!result) {
                     setBadRequest();
-                    message = "Проект не найден";
+                    message = ErrorMsg.PROJECTS_NOT_FOUND.getText();
                 }
+                break;
+            case DELETE:
+                if (result) {
+                    Response.Status status = Response.Status.NO_CONTENT;
+                    code = status.getStatusCode();
+                    state = status.getReasonPhrase();
+                } else {
+                    setBadRequest();
+                    message = ErrorMsg.PROJECT_NOT_FOUND.getText();
+                }
+                break;
         }
     }
 
-    private void setBadRequest(){
+    private void setBadRequest() {
         Response.Status status = Response.Status.BAD_REQUEST;
         code = status.getStatusCode();
         state = status.getReasonPhrase();

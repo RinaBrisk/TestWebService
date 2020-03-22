@@ -25,7 +25,10 @@ public class ProjectDao implements Manipulate<Project> {
     @Override
     public boolean add(Project project) {
         boolean isOk = false;
-        if (findByUrl(project.getUrl()) != null) {
+        if (project.getUrl() == null || project.getUrl().isEmpty()) {
+            return isOk;
+        }
+        if (findByUrl(project.getUrl()) == null) {
             projectDB.addProject(project.getUrl(), project.getOwner(), project.getNumberOfStars());
             isOk = true;
         }
@@ -35,6 +38,9 @@ public class ProjectDao implements Manipulate<Project> {
     @Override
     public boolean delete(String url) {
         boolean isOk = false;
+        if (url == null || url.isEmpty()) {
+            return isOk;
+        }
         Project project = findByUrl(url);
         if (project != null) {
             projectDB.getProjectList().remove(project);

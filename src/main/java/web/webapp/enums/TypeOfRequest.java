@@ -1,4 +1,4 @@
-package web.webapp;
+package web.webapp.enums;
 
 public enum TypeOfRequest {
     GET,
