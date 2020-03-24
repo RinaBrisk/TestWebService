@@ -2,7 +2,7 @@ package web.webapp.model;
 
 import java.util.List;
 
-public interface Manipulate<T> {
+public interface ProjectRepository<T> {
 
     List<T> findByOwner(String url);
 

@@ -1,14 +1,15 @@
-package web.webapp.model;
+package web.webapp.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import web.webapp.model.Project;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Component
+@Repository
 @AllArgsConstructor
 public class InMemoryProjectDB {
 
@@ -28,6 +29,10 @@ public class InMemoryProjectDB {
         project.setNumberOfStars(numberOfStars);
         projectList.add(project);
         return project;
+    }
+
+    public void addProject(Project project){
+        projectList.add(project);
     }
 
 }

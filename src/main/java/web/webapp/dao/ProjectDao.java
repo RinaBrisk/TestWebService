@@ -1,16 +1,24 @@
-package web.webapp.model;
+package web.webapp.dao;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import web.webapp.model.ProjectRepository;
+import web.webapp.model.Project;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 @Component
-public class ProjectDao implements Manipulate<Project> {
+public class ProjectDao implements ProjectRepository<Project> {
 
     @Autowired
-    private InMemoryProjectDB projectDB;
+    public InMemoryProjectDB projectDB;
+
+//    public ProjectDao(InMemoryProjectDB projectDB){
+//        ProjectDao.projectDB = projectDB;
+//    }
 
     @Override
     public List<Project> findByOwner(String owner) {
