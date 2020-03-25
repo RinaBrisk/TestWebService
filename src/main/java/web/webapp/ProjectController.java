@@ -19,7 +19,6 @@ public class ProjectController {
     @Autowired
     private ProjectDao projectDao;
 
-
     @GetMapping("/all")
     public ResponseEntity<ResultResponse> projects(){
         final List<Project> projects = projectDao.getAll();

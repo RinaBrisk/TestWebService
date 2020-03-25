@@ -6,7 +6,7 @@ import web.webapp.enums.TypeOfRequest;
 import javax.ws.rs.core.Response;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.Is.is;
 
 public class CheckUtil {

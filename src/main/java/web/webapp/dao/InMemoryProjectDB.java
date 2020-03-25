@@ -1,16 +1,14 @@
 package web.webapp.dao;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import web.webapp.model.Project;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Repository
-@AllArgsConstructor
+@Component
 public class InMemoryProjectDB {
 
     private List<Project> projectList;

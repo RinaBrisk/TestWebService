@@ -1,28 +1,26 @@
 package web.webappTest.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import web.webapp.dao.InMemoryProjectDB;
 import web.webapp.model.Project;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Random;
 
+@Component
 public class CreateTestState {
 
-    private static InMemoryProjectDB projectDB;
+    @Resource
+    private InMemoryProjectDB projectDB;
 
-    @Autowired
-    public CreateTestState(InMemoryProjectDB projectDB){
-        CreateTestState.projectDB = projectDB;
-    }
-
-    public static Project createAndUpdateProject(){
+    public Project createAndUpdateProject(){
         Project project = createProject();
         projectDB.addProject(project);
         return project;
     }
 
-    public static Project createProject(){
+    public Project createProject(){
         Random random = new Random();
         String owner = String.valueOf(random.nextInt());
 
@@ -33,7 +31,7 @@ public class CreateTestState {
         return new Project(url, owner, random.nextInt());
     }
 
-    public static Project getProject(){
+    public Project getProject(){
         List<Project> projectList = projectDB.getProjectList();
         if(projectList.size() > 0){
             return projectList.get(0);

@@ -1,24 +1,20 @@
 package web.webapp.dao;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import web.webapp.model.ProjectRepository;
+import web.webapp.model.Manipulating;
 import web.webapp.model.Project;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 @Component
-public class ProjectDao implements ProjectRepository<Project> {
+public class ProjectDao implements Manipulating<Project> {
 
-    @Autowired
+    @Resource
     public InMemoryProjectDB projectDB;
-
-//    public ProjectDao(InMemoryProjectDB projectDB){
-//        ProjectDao.projectDB = projectDB;
-//    }
 
     @Override
     public List<Project> findByOwner(String owner) {
@@ -80,4 +76,5 @@ public class ProjectDao implements ProjectRepository<Project> {
     private boolean projectExists(String url) {
         return projectDB.getProjectList().stream().anyMatch(project -> project.getUrl().equals(url));
     }
+
 }
