@@ -2,8 +2,8 @@ package web.webapp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import web.webapp.dao.InMemoryProjectDB;
 import web.webapp.model.Project;
+import web.webapp.model.ProjectService;
 
 import java.util.List;
 import java.util.Random;
@@ -12,11 +12,11 @@ import java.util.Random;
 public class CreateTestState {
 
     @Autowired
-    private InMemoryProjectDB projectDB;
+    private ProjectService projectService;
 
     public Project createAndUpdateProject(){
         Project project = createProject();
-        projectDB.addProject(project);
+        projectService.add(project);
         return project;
     }
 
@@ -27,12 +27,11 @@ public class CreateTestState {
         String url = "https://github.com/"
                 .concat(owner)
                 .concat(".git");
-
-        return new Project(url, owner, random.nextInt());
+        return new Project(random.nextLong(), url, owner, random.nextInt());
     }
 
     public Project getProject(){
-        List<Project> projectList = projectDB.getProjectList();
+        List<Project> projectList = projectService.getAll();
         if(projectList.size() > 0){
             return projectList.get(0);
         }else{

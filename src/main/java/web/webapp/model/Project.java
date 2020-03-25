@@ -4,17 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class Project {
 
-    @NotNull(message = "Url cannot be null")
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column
     private String url;
-    @NotNull(message = "Owner cannot be null")
+    @Column
     private String owner;
+    @Column
     private int numberOfStars;
 
 }

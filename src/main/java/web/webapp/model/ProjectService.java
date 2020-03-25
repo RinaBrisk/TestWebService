@@ -1,29 +1,28 @@
-package web.webapp.dao;
+package web.webapp.model;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import web.webapp.model.Manipulating;
-import web.webapp.model.Project;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
 @Component
-public class ProjectDao implements Manipulating<Project> {
+public class ProjectService implements IProjectService {
 
     @Autowired
-    public InMemoryProjectDB projectDB;
+    private ProjectRepository repository;
 
     @Override
     public List<Project> findByOwner(String owner) {
-        return projectDB.getProjectList().stream().filter(project -> project.getOwner().equals(owner)).collect(Collectors.toList());
+        return getAll().stream().filter(project -> project.getOwner().equals(owner)).collect(Collectors.toList());
     }
 
     @Override
     public List<Project> getAll() {
-        return projectDB.getProjectList();
+        List<Project> list = new ArrayList<>();
+        repository.findAll().forEach(list::add);
+        return list;
     }
 
     @Override
@@ -33,7 +32,7 @@ public class ProjectDao implements Manipulating<Project> {
             return isOk;
         }
         if (findByUrl(project.getUrl()) == null) {
-            projectDB.addProject(project.getUrl(), project.getOwner(), project.getNumberOfStars());
+            repository.save(project);
             isOk = true;
         }
         return isOk;
@@ -47,7 +46,7 @@ public class ProjectDao implements Manipulating<Project> {
         }
         Project project = findByUrl(url);
         if (project != null) {
-            projectDB.getProjectList().remove(project);
+            getAll().remove(project);
             isOk = true;
         }
         return isOk;
@@ -57,7 +56,7 @@ public class ProjectDao implements Manipulating<Project> {
     public boolean update(Project project) {
         boolean isOk = false;
         if (findByUrl(project.getUrl()) != null) {
-            projectDB.getProjectList().forEach(p -> {
+            getAll().forEach(p -> {
                 if (p.getUrl().equals(project.getUrl())) {
                     p.setOwner(project.getOwner());
                     p.setNumberOfStars(project.getNumberOfStars());
@@ -70,11 +69,11 @@ public class ProjectDao implements Manipulating<Project> {
 
     private Project findByUrl(String url) {
         return projectExists(url) ?
-                projectDB.getProjectList().stream().filter(project -> project.getUrl().equals(url)).findAny().get() : null;
+                getAll().stream().filter(project -> project.getUrl().equals(url)).findAny().get() : null;
     }
 
     private boolean projectExists(String url) {
-        return projectDB.getProjectList().stream().anyMatch(project -> project.getUrl().equals(url));
+        return getAll().stream().anyMatch(project -> project.getUrl().equals(url));
     }
 
 }

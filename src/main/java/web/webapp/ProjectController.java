@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import web.webapp.dao.ProjectDao;
 import web.webapp.enums.TypeOfRequest;
 import web.webapp.model.Project;
+import web.webapp.model.ProjectService;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 public class ProjectController {
 
     @Autowired
-    private ProjectDao projectDao;
+    private ProjectService projectService;
 
     @ApiOperation(value = "View a list of available projects", response = ResultResponse.class)
     @ApiResponses(value = {
@@ -27,7 +27,7 @@ public class ProjectController {
     })
     @GetMapping(value = "/all", produces = "application/json")
     public ResultResponse projects() {
-        final List<Project> projects = projectDao.getAll();
+        final List<Project> projects = projectService.getAll();
         return new ResultResponse(projects);
     }
 
@@ -37,7 +37,7 @@ public class ProjectController {
     @ApiOperation(value = "Search a project by the owner", response = ResultResponse.class)
     @GetMapping(value = "/{owner}", produces = "application/json")
     public ResultResponse project(@PathVariable String owner) {
-        final List<Project> projects = projectDao.findByOwner(owner);
+        final List<Project> projects = projectService.findByOwner(owner);
         return new ResultResponse(projects);
     }
 
@@ -49,7 +49,7 @@ public class ProjectController {
     @ApiOperation(value = "Add a project", response = ResultResponse.class)
     @PostMapping(value = "/create", produces = "application/json")
     public ResultResponse create(@RequestBody Project project) {
-        final boolean result = projectDao.add(project);
+        final boolean result = projectService.add(project);
         return new ResultResponse(result, TypeOfRequest.POST);
     }
 
@@ -61,7 +61,7 @@ public class ProjectController {
     @ApiOperation(value = "Delete a project", response = ResultResponse.class)
     @DeleteMapping(value = "/delete", produces = "application/json")
     public ResultResponse delete(@RequestBody Project project) {
-        final boolean result = projectDao.delete(project.getUrl());
+        final boolean result = projectService.delete(project.getUrl());
         return new ResultResponse(result, TypeOfRequest.DELETE);
     }
 
@@ -73,7 +73,7 @@ public class ProjectController {
     @ApiOperation(value = "Update a project", response = ResultResponse.class)
     @PutMapping(value = "/update", produces = "application/json")
     public ResultResponse update(@RequestBody Project project) {
-        final boolean result = projectDao.update(project);
+        final boolean result = projectService.update(project);
         return new ResultResponse(result, TypeOfRequest.PUT);
     }
 

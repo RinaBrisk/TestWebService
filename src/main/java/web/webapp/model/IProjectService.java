@@ -2,15 +2,16 @@ package web.webapp.model;
 
 import java.util.List;
 
-public interface Manipulating<T> {
+public interface IProjectService {
 
-    List<T> findByOwner(String url);
+    List<Project> findByOwner(String url);
 
-    List<T> getAll();
+    List<Project> getAll();
 
     boolean add(Project project);
 
     boolean delete(String url);
 
     boolean update(Project project);
+
 }
