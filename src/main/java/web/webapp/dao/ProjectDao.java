@@ -1,11 +1,11 @@
 package web.webapp.dao;
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import web.webapp.model.Manipulating;
 import web.webapp.model.Project;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class ProjectDao implements Manipulating<Project> {
 
-    @Resource
+    @Autowired
     public InMemoryProjectDB projectDB;
 
     @Override

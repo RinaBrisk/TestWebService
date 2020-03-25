@@ -1,17 +1,17 @@
-package web.webappTest.utils;
+package web.webapp;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import web.webapp.dao.InMemoryProjectDB;
 import web.webapp.model.Project;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Random;
 
 @Component
 public class CreateTestState {
 
-    @Resource
+    @Autowired
     private InMemoryProjectDB projectDB;
 
     public Project createAndUpdateProject(){
@@ -39,4 +39,5 @@ public class CreateTestState {
             return createProject();
         }
     }
+
 }

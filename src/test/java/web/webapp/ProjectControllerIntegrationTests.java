@@ -3,6 +3,7 @@ package web.webapp;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -10,12 +11,12 @@ import org.springframework.web.client.RestTemplate;
 import web.webapp.enums.TypeOfRequest;
 import web.webapp.model.Project;
 import web.webappTest.utils.CheckUtil;
-import web.webappTest.utils.CreateTestState;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProjectControllerIntegrationTests {
 
+    @Autowired
     private CreateTestState testState;
 
     private RestTemplate restTemplate;
@@ -24,7 +25,6 @@ public class ProjectControllerIntegrationTests {
 
     @Before
     public void set() {
-        testState = new CreateTestState();
         this.restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
     }
