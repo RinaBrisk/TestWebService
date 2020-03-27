@@ -42,7 +42,6 @@ public class CheckUtil {
         assertThat(response, notNullValue());
         assertThat(response.getCode(), notNullValue());
         assertThat(response.getState(), notNullValue());
-        assertThat(response.getResult(), notNullValue());
     }
 
 }

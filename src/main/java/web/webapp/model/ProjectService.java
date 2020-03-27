@@ -46,7 +46,7 @@ public class ProjectService implements IProjectService {
         }
         Project project = findByUrl(url);
         if (project != null) {
-            getAll().remove(project);
+            repository.delete(project);
             isOk = true;
         }
         return isOk;
